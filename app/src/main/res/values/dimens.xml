@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="margin_til_top_bottom">5dp</dimen>
+    <dimen name="margin_til_left_right">30dp</dimen>
+    <dimen name="margin_btn_top_bottom">5dp</dimen>
+
+</resources>

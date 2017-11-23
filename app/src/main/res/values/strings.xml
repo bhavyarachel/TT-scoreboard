@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Winter Games - TT Tournament</string>
+    <string name="team1">Team 1</string>
+    <string name="team2">Team 2</string>
+    <string name="next">Next</string>
+    <string name="team1_players">Enter player(s) in Team 1 -</string>
+    <string name="players">Player name(s)</string>
+    <string name="team2_players">Enter player(s) in Team 2 -</string>
+    <string name="start_game">Start game</string>
+    <string name="invalidTeam1Name">Invalid Team 1 name</string>
+    <string name="invalidTeam2Name">Invalid Team 2 name</string>
+    <string name="try_again">Please enter valid details</string>
+    <string name="invalidTeam1PlayerNames">Invalid Team 1 player name(s)</string>
+    <string name="invalidTeam2PlayerNames">Invalid Team 2 player name(s)</string>
+    <string name="team1_hint">Enter name for Team 1</string>
+    <string name="team2_hint">Enter name for Team 2</string>
+    <string name="game_over">Game Over</string>
+    <string name="same_teams">Same team has been selected twice</string>
+</resources>
