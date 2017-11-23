@@ -67,10 +67,10 @@ public class PlayersActivity extends AppCompatActivity {
         boolean isValid = true;
         team1Players = team1PlayersEditText.getText().toString();
         team2Players = team2PlayersEditText.getText().toString();
-        if(TextUtils.isEmpty(team1Players)){
+        if(TextUtils.isEmpty(team1Players.trim())){
             isValid= false;
             Toast.makeText(this, getString(R.string.invalidTeam1PlayerNames), Toast.LENGTH_SHORT).show();
-        } else if(TextUtils.isEmpty(team2Players)){
+        } else if(TextUtils.isEmpty(team2Players.trim())){
             isValid = false;
             Toast.makeText(this, getString(R.string.invalidTeam2PlayerNames), Toast.LENGTH_SHORT).show();
         }
