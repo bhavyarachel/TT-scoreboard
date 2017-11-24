@@ -19,6 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Created by Bhavya on 23/11/17.
+ * Activity to enter team names playing in the current match
+ */
 public class PlayingTeamsActivity extends AppCompatActivity {
 
     @BindView(R.id.spinner_team_name_1)
@@ -26,9 +30,9 @@ public class PlayingTeamsActivity extends AppCompatActivity {
     @BindView(R.id.spinner_team_name_2)
     Spinner mTeamName2Spinner;
 
-    private String team1Name;
-    private String team2Name;
-    private boolean isValidNames = false;
+    private String mTeam1Name;
+    private String mTeam2Name;
+    private boolean mIsValidNames = false;
     private List<String> mTeamNames = new ArrayList<>();
 
     public static void launchActivity(Activity activity) {
@@ -46,11 +50,15 @@ public class PlayingTeamsActivity extends AppCompatActivity {
         setTeam2Spinner();
     }
 
+    /**
+     * On clicking next button, save the team names into shared preference and launch
+     * PlayersActivity if all fields are valid.
+     */
     @OnClick(R.id.btn_next)
     void onClickNext(){
-        isValidNames = validateFields();
-        if(isValidNames){
-            CommonMethods.storeTeamNames(this, team1Name, team2Name);
+        mIsValidNames = validateFields();
+        if(mIsValidNames){
+            CommonMethods.storeTeamNames(this, mTeam1Name, mTeam2Name);
             PlayersActivity.launchActivity(this);
             finish();
         } else {
@@ -58,17 +66,24 @@ public class PlayingTeamsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * To validate all the fields
+     * @return true if valid ; false if invalid
+     */
     private boolean validateFields() {
         boolean isValid = true;
-        team1Name = mTeamName1Spinner.getSelectedItem().toString();
-        team2Name = mTeamName2Spinner.getSelectedItem().toString();
-        if(team1Name.equals(team2Name)){
+        mTeam1Name = mTeamName1Spinner.getSelectedItem().toString();
+        mTeam2Name = mTeamName2Spinner.getSelectedItem().toString();
+        if(mTeam1Name.equals(mTeam2Name)){
             isValid = false;
             Toast.makeText(this, getString(R.string.same_teams), Toast.LENGTH_SHORT).show();
         }
         return isValid;
     }
 
+    /**
+     * To initialize team 1 spinner
+     */
     private void setTeam1Spinner() {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.team_name_spinner_layout, mTeamNames);
@@ -76,6 +91,9 @@ public class PlayingTeamsActivity extends AppCompatActivity {
         mTeamName1Spinner.setAdapter(dataAdapter);
     }
 
+    /**
+     * To initialize team 2 spinner
+     */
     private void setTeam2Spinner(){
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.team_name_spinner_layout, mTeamNames);

@@ -1,7 +1,8 @@
 package com.example.bhavya.tabletennis.utils;
 
 /**
- * Created by Mobomo LLC on 23/11/17.
+ * Created by Bhavya on 23/11/17.
+ * App constants
  */
 
 public class AppConstants {

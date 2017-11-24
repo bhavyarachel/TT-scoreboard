@@ -16,4 +16,7 @@
     <string name="team2_hint">Enter name for Team 2</string>
     <string name="game_over">Game Over</string>
     <string name="same_teams">Same team has been selected twice</string>
+    <string name="confirm_game_over">Confirm game over</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

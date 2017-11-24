@@ -16,20 +16,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Created by Bhavya on 23/11/17.
+ * Activity to enter players playing in the current match
+ */
 public class PlayersActivity extends AppCompatActivity {
 
     @BindView(R.id.et_team1_players)
-    EditText team1PlayersEditText;
+    EditText mTeam1PlayersEditText;
     @BindView(R.id.et_team2_players)
-    EditText team2PlayersEditText;
+    EditText mTeam2PlayersEditText;
     @BindView(R.id.tv_player_in_team2)
     TextView mTextViewPlayerInTeam2;
     @BindView(R.id.tv_player_in_team1)
     TextView mTextViewPlayerInTeam1;
 
-    private String team1Players;
-    private String team2Players;
-    private boolean isValidNames = false;
+    private String mTeam1Players;
+    private String mTeam2Players;
+    private boolean mIsValidNames = false;
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, PlayersActivity.class);
@@ -44,11 +48,15 @@ public class PlayersActivity extends AppCompatActivity {
         getTeamNames();
     }
 
+    /**
+     * On clicking start game button, save the player names to the shared preference and launch
+     * Scoreboard Activity if all fields are valid
+     */
     @OnClick(R.id.btn_start_game)
     void onStartGameClick(){
-        isValidNames = validateFields();
-        if(isValidNames){
-            CommonMethods.storePlayerNames(this, team1Players, team2Players);
+        mIsValidNames = validateFields();
+        if(mIsValidNames){
+            CommonMethods.storePlayerNames(this, mTeam1Players, mTeam2Players);
             ScoreboardActivity.launchActivity(this);
             finish();
         } else {
@@ -56,6 +64,9 @@ public class PlayersActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * To get the team names from shared preference
+     */
     private void getTeamNames() {
         String mTeam1Name = CommonMethods.getTeam1Name(this);
         mTextViewPlayerInTeam1.setText(getString(R.string.team1_players).concat(mTeam1Name));
@@ -63,14 +74,18 @@ public class PlayersActivity extends AppCompatActivity {
         mTextViewPlayerInTeam2.setText(getString(R.string.team2_players).concat(mTeam2Name));
     }
 
+    /**
+     * To validate all the fields
+     * @return true if valid ; false if invalid
+     */
     private boolean validateFields() {
         boolean isValid = true;
-        team1Players = team1PlayersEditText.getText().toString();
-        team2Players = team2PlayersEditText.getText().toString();
-        if(TextUtils.isEmpty(team1Players.trim())){
+        mTeam1Players = mTeam1PlayersEditText.getText().toString();
+        mTeam2Players = mTeam2PlayersEditText.getText().toString();
+        if(TextUtils.isEmpty(mTeam1Players.trim())){
             isValid= false;
             Toast.makeText(this, getString(R.string.invalidTeam1PlayerNames), Toast.LENGTH_SHORT).show();
-        } else if(TextUtils.isEmpty(team2Players.trim())){
+        } else if(TextUtils.isEmpty(mTeam2Players.trim())){
             isValid = false;
             Toast.makeText(this, getString(R.string.invalidTeam2PlayerNames), Toast.LENGTH_SHORT).show();
         }
