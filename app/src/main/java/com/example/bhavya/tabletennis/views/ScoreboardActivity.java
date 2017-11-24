@@ -43,6 +43,10 @@ public class ScoreboardActivity extends AppCompatActivity {
     ImageView mAddOnePointTeam2;
     @BindView(R.id.iv_minus_point_team2)
     ImageView mMinusOnePointTeam2;
+    @BindView(R.id.iv_team_1_serve)
+    ImageView mTeam1ServeImageView;
+    @BindView(R.id.iv_team_2_serve)
+    ImageView mTeam2ServeImageView;
 
     private int mScoreTeam1;
     private int mScoreTeam2;
@@ -120,6 +124,24 @@ public class ScoreboardActivity extends AppCompatActivity {
     }
 
     /**
+     * For serve --> On clicking TT bat1, set alpha to TTbat2
+     */
+    @OnClick(R.id.iv_team_1_serve)
+    void onClickTTTeam1Bat(){
+        mTeam2ServeImageView.setAlpha(0.5f);
+        mTeam1ServeImageView.setAlpha(1f);
+    }
+
+    /**
+     * For serve --> On clicking TT bat2, set alpha to TTbat1
+     */
+    @OnClick(R.id.iv_team_2_serve)
+    void onClickTTTeam2Bat(){
+        mTeam1ServeImageView.setAlpha(0.5f);
+        mTeam2ServeImageView.setAlpha(1f);
+    }
+
+    /**
      * To confirm game over
      */
     private void confirmGameOver(){
@@ -170,6 +192,14 @@ public class ScoreboardActivity extends AppCompatActivity {
         CommonMethods.storeTeamTwoScore(this, mScoreTeam2);
         mScoreTeam1TextView.setText(String.valueOf(mScoreTeam1));
         mScoreTeam2TextView.setText(String.valueOf(mScoreTeam2));
+        setAlphaForTeam2TTBat();
+    }
+
+    /**
+     * Set alpha for team 2 TT bat initially
+     */
+    private void setAlphaForTeam2TTBat() {
+        mTeam2ServeImageView.setAlpha(0.5f);
     }
 
     /**
