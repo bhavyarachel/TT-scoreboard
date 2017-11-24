@@ -219,6 +219,49 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_game_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_game_status_team_1"
+                style="@style/textViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/advantage"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/tv_game_status_team_2"
+                style="@style/textViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/advantage"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_duece"
+            style="@style/textViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deuce"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/btn_game_over"
             android:layout_width="match_parent"
@@ -226,7 +269,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="15dp"
             android:background="@color/scoreColor"
             android:text="@string/game_over"
             android:textColor="@color/textColorWhite"

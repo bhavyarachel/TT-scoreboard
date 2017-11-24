@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bhavya.tabletennis.R;
@@ -47,9 +49,19 @@ public class ScoreboardActivity extends AppCompatActivity {
     ImageView mTeam1ServeImageView;
     @BindView(R.id.iv_team_2_serve)
     ImageView mTeam2ServeImageView;
+    @BindView(R.id.tv_game_status_team_1)
+    TextView mGameStatusTeam1TextView;
+    @BindView(R.id.tv_game_status_team_2)
+    TextView mGameStatusTeam2TextView;
+    @BindView(R.id.layout_game_status)
+    LinearLayout mGameStatusLayout;
+    @BindView(R.id.tv_duece)
+    TextView mDeuceTextView;
 
     private int mScoreTeam1;
     private int mScoreTeam2;
+    private int mScoreSum = 0;
+    private boolean mIsTeam1Serve = true;
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, ScoreboardActivity.class);
@@ -79,6 +91,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         mScoreTeam1++;
         mScoreTeam1TextView.setText(String.valueOf(mScoreTeam1));
         saveTeam1ScoreIntoSharedPref();
+        switchServeBasedOnScoreSum();
     }
 
     /**
@@ -89,6 +102,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         mScoreTeam2++;
         mScoreTeam2TextView.setText(String.valueOf(mScoreTeam2));
         saveTeam2ScoreIntoSharedPref();
+        switchServeBasedOnScoreSum();
     }
 
     /**
@@ -100,6 +114,7 @@ public class ScoreboardActivity extends AppCompatActivity {
             mScoreTeam1--;
             mScoreTeam1TextView.setText(String.valueOf(mScoreTeam1));
             saveTeam1ScoreIntoSharedPref();
+            switchServeBasedOnScoreSum();
         }
     }
 
@@ -112,6 +127,7 @@ public class ScoreboardActivity extends AppCompatActivity {
             mScoreTeam2--;
             mScoreTeam2TextView.setText(String.valueOf(mScoreTeam2));
             saveTeam2ScoreIntoSharedPref();
+            switchServeBasedOnScoreSum();
         }
     }
 
@@ -130,6 +146,7 @@ public class ScoreboardActivity extends AppCompatActivity {
     void onClickTTTeam1Bat(){
         mTeam2ServeImageView.setAlpha(0.5f);
         mTeam1ServeImageView.setAlpha(1f);
+        mIsTeam1Serve = true;
     }
 
     /**
@@ -139,6 +156,7 @@ public class ScoreboardActivity extends AppCompatActivity {
     void onClickTTTeam2Bat(){
         mTeam1ServeImageView.setAlpha(0.5f);
         mTeam2ServeImageView.setAlpha(1f);
+        mIsTeam1Serve = false;
     }
 
     /**
@@ -199,6 +217,7 @@ public class ScoreboardActivity extends AppCompatActivity {
      * Set alpha for team 2 TT bat initially
      */
     private void setAlphaForTeam2TTBat() {
+        mIsTeam1Serve = true;
         mTeam2ServeImageView.setAlpha(0.5f);
     }
 
@@ -214,5 +233,60 @@ public class ScoreboardActivity extends AppCompatActivity {
      */
     private void saveTeam2ScoreIntoSharedPref(){
         CommonMethods.storeTeamTwoScore(this, mScoreTeam2);
+    }
+
+    /**
+     * To switch serve based on score sum
+     */
+    private void switchServeBasedOnScoreSum(){
+        mScoreSum = mScoreTeam1 + mScoreTeam2;
+        if(mScoreSum <= 40){
+            if(mScoreSum % 5 == 0){
+                if(mIsTeam1Serve){
+                    mIsTeam1Serve = false;
+                    mTeam1ServeImageView.setAlpha(0.5f);
+                    mTeam2ServeImageView.setAlpha(1f);
+                } else {
+                    mIsTeam1Serve = true;
+                    mTeam2ServeImageView.setAlpha(0.5f);
+                    mTeam1ServeImageView.setAlpha(1f);
+                }
+            }
+            if((mScoreSum == 40) && (mScoreTeam1 == mScoreTeam2)){
+                mDeuceTextView.setVisibility(View.VISIBLE);
+                mGameStatusLayout.setVisibility(View.GONE);
+            } else {
+                mDeuceTextView.setVisibility(View.GONE);
+                mGameStatusLayout.setVisibility(View.GONE);
+            }
+        }
+
+        if(mScoreSum > 40) {
+            if((mScoreTeam2 - mScoreTeam1) == 1){
+                mDeuceTextView.setVisibility(View.GONE);
+                mGameStatusLayout.setVisibility(View.VISIBLE);
+                mGameStatusTeam2TextView.setText(getString(R.string.advantage));
+                mGameStatusTeam2TextView.setVisibility(View.VISIBLE);
+                mGameStatusTeam1TextView.setVisibility(View.INVISIBLE);
+            } else if((mScoreTeam1 - mScoreTeam2 == 1)){
+                mDeuceTextView.setVisibility(View.GONE);
+                mGameStatusLayout.setVisibility(View.VISIBLE);
+                mGameStatusTeam1TextView.setText(getString(R.string.advantage));
+                mGameStatusTeam1TextView.setVisibility(View.VISIBLE);
+                mGameStatusTeam2TextView.setVisibility(View.INVISIBLE);
+            } else if((mScoreTeam2 - mScoreTeam1 == 2)){
+                mDeuceTextView.setVisibility(View.GONE);
+                mGameStatusLayout.setVisibility(View.VISIBLE);
+                mGameStatusTeam2TextView.setText(getString(R.string.winner));
+                mGameStatusTeam2TextView.setVisibility(View.VISIBLE);
+                mGameStatusTeam1TextView.setVisibility(View.INVISIBLE);
+            } else if((mScoreTeam1 - mScoreTeam2 == 2)){
+                mDeuceTextView.setVisibility(View.GONE);
+                mGameStatusLayout.setVisibility(View.VISIBLE);
+                mGameStatusTeam1TextView.setText(getString(R.string.winner));
+                mGameStatusTeam1TextView.setVisibility(View.VISIBLE);
+                mGameStatusTeam2TextView.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

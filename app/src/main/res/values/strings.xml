@@ -19,4 +19,7 @@
     <string name="confirm_game_over">Confirm game over</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="deuce">Deuce</string>
+    <string name="advantage">(ADV)</string>
+    <string name="winner">Winner</string>
 </resources>
