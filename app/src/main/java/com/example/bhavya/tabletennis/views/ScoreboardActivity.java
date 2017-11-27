@@ -25,6 +25,8 @@ import butterknife.OnClick;
  */
 public class ScoreboardActivity extends AppCompatActivity {
 
+    private static final int MAX_SCORE = 22;
+
     @BindView(R.id.tv_team1_name)
     TextView mTeam1NameTextView;
     @BindView(R.id.tv_team2_name)
@@ -88,10 +90,12 @@ public class ScoreboardActivity extends AppCompatActivity {
      */
     @OnClick(R.id.iv_add_point_team1)
     void onAddOnePointForTeam1() {
-        mScoreTeam1++;
-        mScoreTeam1TextView.setText(String.valueOf(mScoreTeam1));
-        saveTeam1ScoreIntoSharedPref();
-        switchServeBasedOnScoreSum();
+        if(mScoreTeam1 < MAX_SCORE){
+            mScoreTeam1++;
+            mScoreTeam1TextView.setText(String.valueOf(mScoreTeam1));
+            saveTeam1ScoreIntoSharedPref();
+            switchServeBasedOnScoreSum();
+        }
     }
 
     /**
@@ -99,10 +103,12 @@ public class ScoreboardActivity extends AppCompatActivity {
      */
     @OnClick(R.id.iv_add_point_team2)
     void onAddOnePointForTeam2() {
-        mScoreTeam2++;
-        mScoreTeam2TextView.setText(String.valueOf(mScoreTeam2));
-        saveTeam2ScoreIntoSharedPref();
-        switchServeBasedOnScoreSum();
+        if(mScoreTeam2 < MAX_SCORE){
+            mScoreTeam2++;
+            mScoreTeam2TextView.setText(String.valueOf(mScoreTeam2));
+            saveTeam2ScoreIntoSharedPref();
+            switchServeBasedOnScoreSum();
+        }
     }
 
     /**
@@ -262,25 +268,25 @@ public class ScoreboardActivity extends AppCompatActivity {
         }
 
         if(mScoreSum > 40) {
-            if((mScoreTeam2 - mScoreTeam1) == 1){
+            if((mScoreTeam2 - mScoreTeam1) == 1){  //when score diff is 1 (team2 > team1)
                 mDeuceTextView.setVisibility(View.GONE);
                 mGameStatusLayout.setVisibility(View.VISIBLE);
                 mGameStatusTeam2TextView.setText(getString(R.string.advantage));
                 mGameStatusTeam2TextView.setVisibility(View.VISIBLE);
                 mGameStatusTeam1TextView.setVisibility(View.INVISIBLE);
-            } else if((mScoreTeam1 - mScoreTeam2 == 1)){
+            } else if((mScoreTeam1 - mScoreTeam2 == 1)){  //when score diff is 1 (team1 > team2)
                 mDeuceTextView.setVisibility(View.GONE);
                 mGameStatusLayout.setVisibility(View.VISIBLE);
                 mGameStatusTeam1TextView.setText(getString(R.string.advantage));
                 mGameStatusTeam1TextView.setVisibility(View.VISIBLE);
                 mGameStatusTeam2TextView.setVisibility(View.INVISIBLE);
-            } else if((mScoreTeam2 - mScoreTeam1 == 2)){
+            } else if((mScoreTeam2 - mScoreTeam1 == 2)){  //when score diff is 2 (team2 > team1)
                 mDeuceTextView.setVisibility(View.GONE);
                 mGameStatusLayout.setVisibility(View.VISIBLE);
                 mGameStatusTeam2TextView.setText(getString(R.string.winner));
                 mGameStatusTeam2TextView.setVisibility(View.VISIBLE);
                 mGameStatusTeam1TextView.setVisibility(View.INVISIBLE);
-            } else if((mScoreTeam1 - mScoreTeam2 == 2)){
+            } else if((mScoreTeam1 - mScoreTeam2 == 2)){ //when score diff is 2 (team1 > team2)
                 mDeuceTextView.setVisibility(View.GONE);
                 mGameStatusLayout.setVisibility(View.VISIBLE);
                 mGameStatusTeam1TextView.setText(getString(R.string.winner));
